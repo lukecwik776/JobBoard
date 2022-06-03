@@ -17,14 +17,14 @@ namespace JobBoard.Models
         public string Location { get; set; }
         public string PayRate { get; set; }
 
-        public List<string> RequiredSkills { get; set; }
-        public List<string> PreferredSkills { get; set; }
+        public string RequiredSkills { get; set; }
+        public string PreferredSkills { get; set; }
 
         public Job()
         {
         }
 
-        public Job(string name, string location, string description, string payRate, List<string> reqSkills, List<string> prefSkills)
+        public Job(string name, string location, string description, string payRate, string reqSkills, string prefSkills)
         {
             Name = name;
             Location = location;

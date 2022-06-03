@@ -46,10 +46,7 @@ namespace JobBoard.Controllers
 
                 foreach (var job in jobs)
                 {
-                    List<string> reqSkills = job.RequiredSkills;
-                    List<string> prefSkills = job.PreferredSkills;
-
-                    JobDetailViewModel newDisplayJob = new JobDetailViewModel(job, reqSkills, prefSkills);
+                    JobDetailViewModel newDisplayJob = new JobDetailViewModel(job);
                     displayJobs.Add(newDisplayJob);
                 }
             }
@@ -64,10 +61,7 @@ namespace JobBoard.Controllers
 
                     foreach (Job job in jobs)
                     {
-                        List<string> reqSkills = job.RequiredSkills;
-                        List<string> prefSkills = job.PreferredSkills;
-
-                        JobDetailViewModel newDisplayJob = new JobDetailViewModel(job, reqSkills, prefSkills);
+                        JobDetailViewModel newDisplayJob = new JobDetailViewModel(job);
                         displayJobs.Add(newDisplayJob);
                     }
 
@@ -85,10 +79,7 @@ namespace JobBoard.Controllers
                             .Include(j => j.Employer)
                             .Single(j => j.Id == job.Id);
 
-                        List<string> reqSkills = job.RequiredSkills;
-                        List<string> prefSkills = job.PreferredSkills;
-
-                        JobDetailViewModel newDisplayJob = new JobDetailViewModel(foundJob, reqSkills, prefSkills);
+                        JobDetailViewModel newDisplayJob = new JobDetailViewModel(foundJob);
                         displayJobs.Add(newDisplayJob);
                     }
                 }
