@@ -8,19 +8,23 @@ namespace JobBoard.ViewModels
     {
         public int JobId { get; set; }
         public string Name { get; set; }
+        public string Description { get; set; }
         public string EmployerName { get; set; }
         public string Location { get; set; }
         public string RequiredSkills { get; set; }
         public string PreferredSkills { get; set;}
+        public string PayRate { get; set; }
 
         public JobDetailViewModel(Job theJob)
         {
             JobId = theJob.Id;
             Name = theJob.Name;
+            Description = theJob.Description;
             EmployerName = theJob.Employer.Name;
             Location = theJob.Location;
             RequiredSkills = theJob.RequiredSkills;
             PreferredSkills = theJob.PreferredSkills;
+            PayRate = theJob.PayRate;
         }
     }
 }
