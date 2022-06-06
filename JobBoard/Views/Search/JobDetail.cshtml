@@ -1,5 +1,37 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model JobBoard.ViewModels.JobDetailViewModel
+
+<h1>@Model.Name</h1>
+
+<table class="table">
+    <tr>
+        <th>Job Name:</th>
+        <td>@Model.Name</td>
+    </tr>
+    <tr>
+        <th>Job Description:</th>
+        <td>@Model.Description</td>
+    </tr>
+    <tr>
+        <th>Employer:</th>
+        <td>@Model.EmployerName</td>
+    </tr>
+    <tr>
+        <th>Job Location:</th>
+        <td>@Model.Location</td>
+    </tr>
+    <tr>
+        <th>Required Skills:</th>
+        <td>@Model.RequiredSkills</td>
+    </tr>
+    <tr>
+        <th>Preferred Skills:</th>
+        <td>@Model.PreferredSkills</td>
+    </tr>
+    <tr>
+        <th>Pay Rate:</th>
+        <td>@Model.PayRate</td>
+    </tr>
+
+</table>
+
+<p><a asp-controller="Search" asp-action="Index">Search More Jobs</a></p>

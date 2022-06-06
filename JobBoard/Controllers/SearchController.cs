@@ -68,18 +68,14 @@ namespace JobBoard.Controllers
                 }
                 else if (searchType == "location")
                 {
-                    List<Job> searchJobs = context.Jobs
+                    jobs = context.Jobs
+                        .Include(j => j.Employer)
                         .Where(j => j.Location == searchTerm)
-                        .Include(j => j.Location)
                         .ToList();
 
-                    foreach (var job in searchJobs)
+                    foreach (Job job in jobs)
                     {
-                        Job foundJob = context.Jobs
-                            .Include(j => j.Employer)
-                            .Single(j => j.Id == job.Id);
-
-                        JobDetailViewModel newDisplayJob = new JobDetailViewModel(foundJob);
+                        JobDetailViewModel newDisplayJob = new JobDetailViewModel(job);
                         displayJobs.Add(newDisplayJob);
                     }
                 }
@@ -90,6 +86,16 @@ namespace JobBoard.Controllers
             ViewBag.jobs = displayJobs;
 
             return View("Index");
+        }
+
+        public IActionResult JobDetail(int id)
+        {
+            Job theJob = context.Jobs
+                .Include(j => j.Employer)
+                .Single(j => j.Id == id);
+
+            JobDetailViewModel viewModel = new JobDetailViewModel(theJob);
+            return View(viewModel);
         }
     }
 }
