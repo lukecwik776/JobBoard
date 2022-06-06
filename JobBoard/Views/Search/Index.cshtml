@@ -1,4 +1,5 @@
-﻿<div class="container body-content">
+﻿<center>
+<div class="container body-content">
 
     <h1>@ViewBag.title</h1>
 
@@ -31,11 +32,12 @@
         <table class="table-bordered table-hover align-items-center">
             @foreach (var job in ViewBag.jobs)
             {
-                <tr>
+                <tr class="clickable-row" href="">
                     <td>
-                        <p>Name: @job.Name</p>
-                        <p>Employer: @job.EmployerName</p>
-                        <p>Location: @job.Location</p>
+                        <p style="margin-bottom:0;">Name: @job.Name</p>
+                        <p style="margin-bottom:0;">Employer: @job.EmployerName</p>
+                        <p style="margin-bottom:0;">Location: @job.Location</p>
+                        <p style="margin-bottom:0;"><a asp-controller="Search" asp-action="JobDetail" asp-route-id="@job.JobId">More Info...</a></p>
                     </td>
                 </tr>
             }
@@ -44,3 +46,4 @@
 
 
 </div>
+</center>
