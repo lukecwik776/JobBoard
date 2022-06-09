@@ -40,7 +40,8 @@ namespace JobBoard.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    EmployerName = table.Column<string>(maxLength: 250, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -175,7 +176,7 @@ namespace JobBoard.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    EmployerId = table.Column<int>(nullable: false),
+                    ApplicationUserId = table.Column<string>(nullable: true),
                     Location = table.Column<string>(nullable: true),
                     PayRate = table.Column<string>(nullable: true),
                     RequiredSkills = table.Column<string>(nullable: true),
@@ -185,11 +186,11 @@ namespace JobBoard.Migrations
                 {
                     table.PrimaryKey("PK_Jobs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Jobs_Employers_EmployerId",
-                        column: x => x.EmployerId,
-                        principalTable: "Employers",
+                        name: "FK_Jobs_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -230,9 +231,9 @@ namespace JobBoard.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Jobs_EmployerId",
+                name: "IX_Jobs_ApplicationUserId",
                 table: "Jobs",
-                column: "EmployerId");
+                column: "ApplicationUserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -253,6 +254,9 @@ namespace JobBoard.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Employers");
+
+            migrationBuilder.DropTable(
                 name: "Jobs");
 
             migrationBuilder.DropTable(
@@ -260,9 +264,6 @@ namespace JobBoard.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "Employers");
         }
     }
 }

@@ -10,15 +10,15 @@ namespace JobBoard.Models
         public string Name { get; set; }
         public string Description { get; set; }
 
-        public Employer Employer { get; set; }
-
-        public int EmployerId { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
+        public string ApplicationUserId { get; set; }
 
         public string Location { get; set; }
         public string PayRate { get; set; }
 
         public string RequiredSkills { get; set; }
         public string PreferredSkills { get; set; }
+
 
         public Job()
         {
