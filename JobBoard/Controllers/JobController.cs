@@ -3,6 +3,11 @@ using JobBoard.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using JobBoard.Data;
+using System.Security.Claims;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity;
+using System.Web;
+using System.Threading.Tasks;
 
 namespace JobBoard.Controllers
 {
@@ -11,8 +16,10 @@ namespace JobBoard.Controllers
     {
         private ApplicationDbContext context;
 
-        public JobController(ApplicationDbContext dbContext)
+        private UserManager<ApplicationUser> _userManager; 
+        public JobController(ApplicationDbContext dbContext, UserManager<ApplicationUser> userManager)
         {
+            _userManager = userManager;
             context = dbContext;
         }
         public IActionResult Index()
@@ -20,28 +27,39 @@ namespace JobBoard.Controllers
             return View("AddJob");
         }
 
-        public IActionResult AddJob()
+        public async Task<IActionResult> AddJob()
         {
+            ApplicationUser user = await _userManager.GetUserAsync(User);
             AddJobViewModel jobViewModel = new AddJobViewModel();
+            jobViewModel.EmployerName = user.EmployerName;
             return View(jobViewModel);
         }
 
         [HttpPost]
         //[Route("/add")]
-        public IActionResult ProcessAddJobForm(AddJobViewModel addJobViewModel)
+        public async Task<IActionResult> ProcessAddJobForm(AddJobViewModel addJobViewModel)
         {
+
             if (ModelState.IsValid)
             {
-                Job newJob = new Job()
+              
+
+                ApplicationUser user = await _userManager.GetUserAsync(User);
+                
+                Job newJob = new Job
                 {
                     Name = addJobViewModel.JobTitle,
                     Location = addJobViewModel.JobLocation, 
-                    Description = addJobViewModel.JobDescription
+                    Description = addJobViewModel.JobDescription,
+                    ApplicationUser = user,
+                    PayRate = addJobViewModel.PayRate,
+                    RequiredSkills = addJobViewModel.RequiredSkills,
+                    PreferredSkills = addJobViewModel.PreferredSkills
                 };
 
                 context.Jobs.Add(newJob);
                 context.SaveChanges();
-                return Redirect("/JobPosted");
+                return Redirect("JobPosted");
             }
             return View("AddJob", addJobViewModel);
         }

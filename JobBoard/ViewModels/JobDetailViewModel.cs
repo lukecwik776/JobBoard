@@ -20,7 +20,7 @@ namespace JobBoard.ViewModels
             JobId = theJob.Id;
             Name = theJob.Name;
             Description = theJob.Description;
-            EmployerName = theJob.Employer.Name;
+            EmployerName = theJob.ApplicationUser.EmployerName;
             Location = theJob.Location;
             RequiredSkills = theJob.RequiredSkills;
             PreferredSkills = theJob.PreferredSkills;

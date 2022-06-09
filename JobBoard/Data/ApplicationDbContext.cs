@@ -7,14 +7,23 @@ using JobBoard.Models;
 
 namespace JobBoard.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext <ApplicationUser>
     {
         public DbSet<Job> Jobs { get; set; }
-        public DbSet<Employer> Employers { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<ApplicationUser>()
+                .Property(e => e.EmployerName)
+                .HasMaxLength(250);
         }
     }
 }

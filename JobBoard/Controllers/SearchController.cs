@@ -41,7 +41,7 @@ namespace JobBoard.Controllers
             if (string.IsNullOrEmpty(searchTerm))
             {
                 jobs = context.Jobs
-                   .Include(j => j.Employer)
+                   .Include(j => j.ApplicationUser)
                    .ToList();
 
                 foreach (var job in jobs)
@@ -55,8 +55,8 @@ namespace JobBoard.Controllers
                 if (searchType == "employer")
                 {
                     jobs = context.Jobs
-                        .Include(j => j.Employer)
-                        .Where(j => j.Employer.Name == searchTerm)
+                        .Include(j => j.ApplicationUser)
+                        .Where(j => j.ApplicationUser.EmployerName == searchTerm)
                         .ToList();
 
                     foreach (Job job in jobs)
@@ -69,7 +69,7 @@ namespace JobBoard.Controllers
                 else if (searchType == "location")
                 {
                     jobs = context.Jobs
-                        .Include(j => j.Employer)
+                        .Include(j => j.ApplicationUser)
                         .Where(j => j.Location == searchTerm)
                         .ToList();
 
@@ -91,7 +91,7 @@ namespace JobBoard.Controllers
         public IActionResult JobDetail(int id)
         {
             Job theJob = context.Jobs
-                .Include(j => j.Employer)
+                .Include(j => j.ApplicationUser)
                 .Single(j => j.Id == id);
 
             JobDetailViewModel viewModel = new JobDetailViewModel(theJob);
