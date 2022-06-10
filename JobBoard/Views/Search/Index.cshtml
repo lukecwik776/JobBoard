@@ -1,4 +1,19 @@
-﻿<center>
+﻿<p>Translate this page:</p>
+
+<div id="google_translate_element"></div>
+
+@section Scripts {
+    <script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+}
+</script>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+} 
+
+<center>
 <div class="container body-content">
 
     <h1>@ViewBag.title</h1>
@@ -29,12 +44,12 @@
 
     @if (ViewBag.jobs != null)
     {
-        <table class="table-bordered table-hover align-items-center">
+        <table style="width: 100%" class="table-bordered table-hover align-items-center">
             @foreach (var job in ViewBag.jobs)
             {
-                <tr class="clickable-row" href="">
+                <tr>
                     <td>
-                        <p style="margin-bottom:0;">Name: @job.Name</p>
+                        <p style="margin-bottom:0;">Job Name: @job.Name</p>
                         <p style="margin-bottom:0;">Employer: @job.EmployerName</p>
                         <p style="margin-bottom:0;">Location: @job.Location</p>
                         <p style="margin-bottom:0;"><a asp-controller="Search" asp-action="JobDetail" asp-route-id="@job.JobId">More Info...</a></p>
